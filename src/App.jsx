@@ -32,18 +32,14 @@ function formatDay(dateStr) {
 }
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      location: "lisbon",
-      isLoading: false,
-      displayLocation: "",
-      weather: {},
-    };
-    this.handleSearch = this.handleSearch.bind(this);
-  }
+  state = {
+    location: "lisbon",
+    isLoading: false,
+    displayLocation: "",
+    weather: {},
+  };
 
-  async fetchWeather() {
+  fetchWeather = async () =>{
     try {
       this.setState({ isLoading: true });
       // 1) Getting location (geocoding)
@@ -74,9 +70,9 @@ class App extends React.Component {
     }
   }
 
-  handleSearch() {
-    this.fetchWeather();
-  }
+  handleSearch = () => this.fetchWeather();
+
+  setLocation = (e) => this.setState({ location: e.target.value })
 
   render() {
     const date = new Date("june 21 2027");
@@ -84,14 +80,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <h1>Weather App</h1>
-        <div>
-          <input
-            type="text"
-            placeholder="Search any location..."
-            value={this.state.location}
-            onChange={(e) => this.setState({ location: e.target.value })}
-          />
-        </div>
+        <Input location={this.state.location} onChangeLocation={this.setLocation}/>
         <button onClick={this.handleSearch}>Get Weather</button>
         {this.state.isLoading && <p className="loader">Loading...</p>}
 
@@ -107,6 +96,21 @@ class App extends React.Component {
 }
 
 export default App;
+
+class Input extends React.Component{
+  render(){
+    return(
+      <div>
+          <input
+            type="text"
+            placeholder="Search any location..."
+            value={this.props.location}
+            onChange={this.props.onChangeLocation}
+          />
+      </div>
+    )
+  }
+}
 
 class Weather extends React.Component {
   render() {
@@ -139,10 +143,14 @@ class Weather extends React.Component {
 class Day extends React.Component {
   render() {
     const { date, max, min, code, isToday } = this.props;
-    return <li className="day">
-      <span>{getWeatherIcon(code)}</span>
-      <p>{isToday ? "Today" : formatDay(date)}</p>
-      <p>{Math.floor(max)}&deg;C - {Math.ceil(min)}&deg;C</p>
-    </li>;
+    return (
+      <li className="day">
+        <span>{getWeatherIcon(code)}</span>
+        <p>{isToday ? "Today" : formatDay(date)}</p>
+        <p>
+          {Math.floor(max)}&deg;C - {Math.ceil(min)}&deg;C
+        </p>
+      </li>
+    );
   }
 }
