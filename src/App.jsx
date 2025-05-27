@@ -33,13 +33,14 @@ function formatDay(dateStr) {
 
 class App extends React.Component {
   state = {
-    location: "lisbon",
+    location: "",
     isLoading: false,
     displayLocation: "",
     weather: {},
   };
 
-  fetchWeather = async () =>{
+  fetchWeather = async () => {
+    if (this.state.location.length < 2) return this.setState({weather:{}}); // don't fetch if input is too short
     try {
       this.setState({ isLoading: true });
       // 1) Getting location (geocoding)
@@ -68,11 +69,27 @@ class App extends React.Component {
     } finally {
       this.setState({ isLoading: false });
     }
+  };
+
+  // handleSearch = () => this.fetchWeather();
+
+  setLocation = (e) => this.setState({ location: e.target.value });
+
+  // is like useEffect with an empty depenecy array []
+  componentDidMount() {
+    // only runs on mount not reReders
+    this.setState({location: localStorage.getItem('location') || ''})
   }
 
-  handleSearch = () => this.fetchWeather();
-
-  setLocation = (e) => this.setState({ location: e.target.value })
+  // is like useEffect with a depenecy array [location]
+  componentDidUpdate(prevProps, prevState) {
+    // only runs on rerender
+    if (this.state.location !== prevState.location) {
+      // fetches the location when it changes / as i type in the input
+      this.fetchWeather();
+      localStorage.setItem('location', this.state.location)
+    }
+  }
 
   render() {
     const date = new Date("june 21 2027");
@@ -80,8 +97,10 @@ class App extends React.Component {
     return (
       <div className="app">
         <h1>Weather App</h1>
-        <Input location={this.state.location} onChangeLocation={this.setLocation}/>
-        <button onClick={this.handleSearch}>Get Weather</button>
+        <Input
+          location={this.state.location}
+          onChangeLocation={this.setLocation}
+        />
         {this.state.isLoading && <p className="loader">Loading...</p>}
 
         {this.state.weather.weathercode && (
@@ -97,22 +116,25 @@ class App extends React.Component {
 
 export default App;
 
-class Input extends React.Component{
-  render(){
-    return(
+class Input extends React.Component {
+  render() {
+    return (
       <div>
-          <input
-            type="text"
-            placeholder="Search any location..."
-            value={this.props.location}
-            onChange={this.props.onChangeLocation}
-          />
+        <input
+          type="text"
+          placeholder="Search any location..."
+          value={this.props.location}
+          onChange={this.props.onChangeLocation}
+        />
       </div>
-    )
+    );
   }
 }
 
 class Weather extends React.Component {
+  componentWillUnmount(){
+    console.log("Weather component is being removed from the DOM");
+  }
   render() {
     const {
       temperature_2m_max: max,
