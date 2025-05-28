@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
   margin: 0;
@@ -11,11 +11,12 @@ html {
 }
 
 body {
-  font-family: "Poppins", cursive;
+  font-family: "Poppins", sans-serif;
   font-size: 2rem;
   height: 100vh;
-  color: #222;
-  background-image: url("https://images.unsplash.com/photo-1511747779856-fd751a79aa22?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  color: #3c3064;
+  background-color: #352765;
+  /* background-image: url("https://images.unsplash.com/photo-1511747779856-fd751a79aa22?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -28,65 +29,73 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 85rem;
+  width: 100rem;
   gap: 4rem;
-  padding: 6rem 0;
+  padding: 6rem 3rem;
   border-radius: 30px;
-  background: linear-gradient(145deg, #cacaca, #f0f0f0);
-  box-shadow: 5px 5px 10px #767676, -5px -5px 10px #767676;
+  background-color: #75afdf;
 }
 
 h1 {
-  font-weight: 400;
-  font-size: 6rem;
+  font-family: "Baloo Bhaijaan 2", sans-serif;
+  font-weight: 800;
+  font-size: 10rem;
   letter-spacing: 2px;
   word-spacing: 5px;
+  color: #352765;
 }
 
 h2 {
   text-align: center;
   margin-bottom: 2.4rem;
+  font-weight: 400;
+}
+
+strong{
+  color: #352765;
 }
 
 input {
   font-family: inherit;
   font-size: 2rem;
-  background-color: #b9b9b9;
+  background-color: #DEEEFD;
+  color: #352765;
   padding: 1.6rem 3.2rem;
   border: none;
   border-radius: 13px;
   width: 32rem;
+  transition: all 0.3s ease-in-out;
 }
 
 input:focus {
-  outline: 2px solid #222;
+  outline: 2px solid #75afdf;
+  transform: translate(0px, -2px);
 }
 
 .weather {
   list-style: none;
   display: flex;
-  gap: 2.4rem;
+  gap: 12px;
 }
 
 .day {
-  background-color: #f0d2ce;
-  padding: 1.6rem 0 2rem;
-  width: 12.8rem;
-
+  background-color: #94c6ef;
+  padding: 1.6rem;
+  width: 12rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.2rem;
-  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.day:hover{
+  background-color: #4f9fe0;
+  transform: translate(0px, -2px);
 }
 
 .day span {
   font-size: 5.2rem;
-}
-
-.day.important {
-  background-color: #ecc5c0;
-  outline: 2px solid #222;
 }
 
 .loader {

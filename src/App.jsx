@@ -40,7 +40,7 @@ class App extends React.Component {
   };
 
   fetchWeather = async () => {
-    if (this.state.location.length < 2) return this.setState({weather:{}}); // don't fetch if input is too short
+    if (this.state.location.length < 2) return this.setState({ weather: {} }); // don't fetch if input is too short
     try {
       this.setState({ isLoading: true });
       // 1) Getting location (geocoding)
@@ -78,7 +78,7 @@ class App extends React.Component {
   // is like useEffect with an empty depenecy array []
   componentDidMount() {
     // only runs on mount not reReders
-    this.setState({location: localStorage.getItem('location') || ''})
+    this.setState({ location: localStorage.getItem("location") || "" });
   }
 
   // is like useEffect with a depenecy array [location]
@@ -87,7 +87,7 @@ class App extends React.Component {
     if (this.state.location !== prevState.location) {
       // fetches the location when it changes / as i type in the input
       this.fetchWeather();
-      localStorage.setItem('location', this.state.location)
+      localStorage.setItem("location", this.state.location);
     }
   }
 
@@ -132,7 +132,7 @@ class Input extends React.Component {
 }
 
 class Weather extends React.Component {
-  componentWillUnmount(){
+  componentWillUnmount() {
     console.log("Weather component is being removed from the DOM");
   }
   render() {
@@ -144,7 +144,7 @@ class Weather extends React.Component {
     } = this.props.weather;
     return (
       <div>
-        <h2>WEATHER {this.props.location}</h2>
+        <h2>Weather this week for <strong>{this.props.location}</strong></h2>
         <ul className="weather">
           {dates.map((date, i) => (
             <Day
@@ -169,7 +169,7 @@ class Day extends React.Component {
       <li className="day">
         <span>{getWeatherIcon(code)}</span>
         <p>{isToday ? "Today" : formatDay(date)}</p>
-        <p>
+        <p style={{fontSize: '13px'}}>
           {Math.floor(max)}&deg;C - {Math.ceil(min)}&deg;C
         </p>
       </li>
